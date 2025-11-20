@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 public class Cleanup implements IMethods{
+    static boolean col = false;
 
     public static ArrayList<ArrayList<Object>> solve(ArrayList<ArrayList<Object>> puzzle){
         puzzle = cleanRow(puzzle);
@@ -41,6 +42,7 @@ public class Cleanup implements IMethods{
     }
 
     private static ArrayList<ArrayList<Object>> cleanColumn(ArrayList<ArrayList<Object>> puzzle) {
+        boolean done = col;
         ArrayList<ArrayList<Object>> result = new ArrayList<>();
         for (int i = 1; i<=9; i++){
             result.add(new ArrayList<>());
@@ -52,6 +54,13 @@ public class Cleanup implements IMethods{
             }
         }
 
-        return cleanRow(result);
+        result = cleanRow(result);
+
+        if(done){
+            col = false;
+            return result;
+        }
+        col = true;
+        return cleanColumn(result);
     }
 }
