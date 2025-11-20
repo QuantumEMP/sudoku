@@ -6,10 +6,12 @@ import java.util.HashSet;
 
 public class Cleanup implements IMethods{
     static boolean col = false;
+    static boolean block = false;
 
     public static ArrayList<ArrayList<Object>> solve(ArrayList<ArrayList<Object>> puzzle){
         puzzle = cleanRow(puzzle);
         puzzle = cleanColumn(puzzle);
+        puzzle = cleanBlock(puzzle);
         System.out.println(puzzle);
         return null;
     }
@@ -48,9 +50,9 @@ public class Cleanup implements IMethods{
             result.add(new ArrayList<>());
         }
 
-        for (int i=0; i< puzzle.size(); i++){
-            for (int j = 0; j<9; j++){
-                result.get(j).add(puzzle.get(i).get(j));
+        for (ArrayList<Object> objects : puzzle) {
+            for (int j = 0; j < 9; j++) {
+                result.get(j).add(objects.get(j));
             }
         }
 
@@ -62,5 +64,56 @@ public class Cleanup implements IMethods{
         }
         col = true;
         return cleanColumn(result);
+    }
+
+    private static ArrayList<ArrayList<Object>> cleanBlock(ArrayList<ArrayList<Object>> puzzle) {
+        boolean done = block;
+        ArrayList<ArrayList<Object>> result = new ArrayList<>();
+        for (int i = 1; i<=9; i++){
+            result.add(new ArrayList<>());
+        }
+
+        for (int i=0; i< 3; i++){
+            for (int j = 0; j<3; j++){
+                result.getFirst().add(puzzle.get(i).get(j));
+            }
+            for (int j = 3; j<6; j++){
+                result.get(1).add(puzzle.get(i).get(j));
+            }
+            for (int j = 6; j<9; j++){
+                result.get(2).add(puzzle.get(i).get(j));
+            }
+        }
+        for (int i=3; i< 6; i++){
+            for (int j = 0; j<3; j++){
+                result.get(3).add(puzzle.get(i).get(j));
+            }
+            for (int j = 3; j<6; j++){
+                result.get(4).add(puzzle.get(i).get(j));
+            }
+            for (int j = 6; j<9; j++){
+                result.get(5).add(puzzle.get(i).get(j));
+            }
+        }
+        for (int i=6; i< 9; i++){
+            for (int j = 0; j<3; j++){
+                result.get(6).add(puzzle.get(i).get(j));
+            }
+            for (int j = 3; j<6; j++){
+                result.get(7).add(puzzle.get(i).get(j));
+            }
+            for (int j = 6; j<9; j++){
+                result.get(8).add(puzzle.get(i).get(j));
+            }
+        }
+
+        result = cleanRow(result);
+
+        if(done){
+            block = false;
+            return result;
+        }
+        block = true;
+        return cleanBlock(result);
     }
 }
