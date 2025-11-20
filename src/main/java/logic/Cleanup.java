@@ -1,6 +1,5 @@
 package logic;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -9,6 +8,7 @@ public class Cleanup implements IMethods{
 
     public static ArrayList<ArrayList<Object>> solve(ArrayList<ArrayList<Object>> puzzle){
         puzzle = cleanRow(puzzle);
+        puzzle = cleanColumn(puzzle);
         System.out.println(puzzle);
         return null;
     }
@@ -38,5 +38,20 @@ public class Cleanup implements IMethods{
         }
 
         return r;
+    }
+
+    private static ArrayList<ArrayList<Object>> cleanColumn(ArrayList<ArrayList<Object>> puzzle) {
+        ArrayList<ArrayList<Object>> result = new ArrayList<>();
+        for (int i = 1; i<=9; i++){
+            result.add(new ArrayList<>());
+        }
+
+        for (int i=0; i< puzzle.size(); i++){
+            for (int j = 0; j<9; j++){
+                result.get(j).add(puzzle.get(i).get(j));
+            }
+        }
+
+        return cleanRow(result);
     }
 }
