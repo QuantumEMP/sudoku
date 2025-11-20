@@ -12,8 +12,7 @@ public class Cleanup implements IMethods{
         puzzle = cleanRow(puzzle);
         puzzle = cleanColumn(puzzle);
         puzzle = cleanBlock(puzzle);
-        System.out.println(puzzle);
-        return null;
+        return puzzle;
     }
 
     private static ArrayList<ArrayList<Object>> cleanRow(ArrayList<ArrayList<Object>> puzzle) {

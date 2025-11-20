@@ -1,4 +1,4 @@
-import logic.Cleanup;
+import logic.NakedSinglesInYourArea;
 
 static String inputFile;
 static String outputFile;
@@ -13,8 +13,8 @@ void main(String[] args) {
     }
 
     ArrayList<ArrayList<Object>> puzzle = convertLines(sudoku);
-    Cleanup.solve(puzzle);
-
+    ArrayList<ArrayList<Object>> result = NakedSinglesInYourArea.solve(puzzle);
+    System.out.println(result);
 
 }
 

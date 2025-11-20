@@ -1,35 +1,32 @@
 package logic;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 
 public class NakedSinglesInYourArea implements IMethods{
 
 
     public static ArrayList<ArrayList<Object>> solve(ArrayList<ArrayList<Object>> puzzle) {
-        boolean didSomething = false;
+        puzzle = Cleanup.solve(puzzle);
+        ArrayList<ArrayList<Object>> result = new ArrayList<>();
         for (ArrayList<Object> line : puzzle){
+            ArrayList<Object> l = new ArrayList<>();
             for (Object item : line){
                 HashSet<Object> possibilities;
-                try{
-                    possibilities = (HashSet<Object>) item;
-                } catch (Exception e) {
-                    continue;
-                }
+                possibilities = new HashSet<>(Arrays.asList(item.toString().split(",")));
 
                 if (possibilities.size() == 1){
-                    item = possibilities.toArray()[0];
-                    didSomething = true;
+                    l.add(possibilities.toArray()[0]);
+                } else {
+                    l.add(item);
                 }
             }
+            result.add(l);
         }
 
-        ArrayList<ArrayList<Object>> result;
-
-        if (didSomething){
-            result = NakedSinglesInYourArea.solve(puzzle);
-        } else{
-            result = puzzle;
+        if (!puzzle.equals(result)){
+            result = NakedSinglesInYourArea.solve(result);
         }
 
         return result;
